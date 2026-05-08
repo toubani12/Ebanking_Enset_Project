@@ -1,0 +1,96 @@
+<div class="container mt-3 customers-page">
+    <ng-container *ngIf="customers$ | async as customers; else failerOrLoadingTemplate">
+        <div class="card customers-card">
+            <div class="card-header customers-header">
+                <div class="customers-header__titles">
+                    <h5 class="customers-title mb-0">Customers</h5>
+                    <div class="customers-subtitle">List of registered customers</div>
+                </div>
+                <div class="customers-count badge text-bg-light" *ngIf="customers?.length !== undefined">
+                    {{ customers.length }}
+                </div>
+            </div>
+
+            <div class="card-body p-0 mt-3">
+                <div *ngIf="searchFormGroup">
+                    <form action="" [formGroup]="searchFormGroup" (ngSubmit)="handleSearchCustomer()" class="customers-search-form">
+                    <div class="input-group">
+                        <input type="text" formControlName="keyword" class="form-control" placeholder="Search by name or email…">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi-search"></i>
+                        </button>
+                    </div>
+
+                </form>
+
+                </div>
+                <ng-container *ngIf="customers.length > 0; else emptyCustomers">
+                    <div class="table-responsive mt-3" >
+                        <table class="table table-hover table-striped align-middle mb-0 customers-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="col-id">Id</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let customer of customers">
+                                    <td class="text-muted">{{ customer.id }}</td>
+                                    <td class="fw-semibold">{{ customer.name }}</td>
+                                    <td>
+                                            {{ customer.email }}
+                                        
+                                    </td>
+                                    <td *ngIf="authService.roles.includes('ADMIN')">
+                                        <button class="btn btn-danger" (click)="handleDeleteCustomer(customer.id)">
+                                            <i class="bi-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </ng-container>
+
+                <ng-template #emptyCustomers>
+                    <div class="customers-empty">
+                        <div class="customers-empty__title">Aucun customer</div>
+                        <div class="customers-empty__subtitle">La réponse du backend est vide.</div>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-template #failerOrLoadingTemplate>
+        <ng-container *ngIf="!errorMessage; else errorTemplate">
+            <div class="card customers-card">
+                <div class="card-header customers-header">
+                    <div class="customers-header__titles">
+                        <h5 class="customers-title mb-0">Customers</h5>
+                        <div class="customers-subtitle">Loading customers…</div>
+                    </div>
+                </div>
+
+                <div class="customers-loading">
+                    <div class="customers-loading__bar" aria-label="Loading"></div>
+                    <div class="customers-loading__body">
+                        <div class="customers-skeleton" aria-hidden="true">
+                            <div class="customers-skeleton__row" *ngFor="let _ of [1,2,3,4,5]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </ng-template>
+
+    <ng-template #errorTemplate>
+        <div class="alert alert-danger" role="alert">
+            <div class="fw-semibold">Error</div>
+            <div class="small">
+                {{ errorMessage?.message || errorMessage?.error?.message || (errorMessage | json) }}
+            </div>
+        </div>
+    </ng-template>
+</div>

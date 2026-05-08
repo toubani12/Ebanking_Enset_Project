@@ -1,0 +1,139 @@
+.customers-page {
+	--customers-radius: calc(var(--bs-border-radius) + 2px);
+}
+
+.customers-card {
+	border-radius: var(--customers-radius);
+	border-color: var(--bs-border-color);
+	overflow: hidden;
+}
+
+.customers-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	background: var(--bs-body-bg);
+}
+
+.customers-header__titles {
+	display: grid;
+	gap: 2px;
+}
+
+.customers-title {
+	letter-spacing: 0.2px;
+}
+
+.customers-subtitle {
+	font-size: 0.875rem;
+	color: var(--bs-secondary-color);
+}
+
+.customers-count {
+	border: 1px solid var(--bs-border-color);
+	font-weight: 600;
+}
+
+.customers-table thead th {
+	font-size: 0.8rem;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: var(--bs-secondary-color);
+	background: var(--bs-tertiary-bg);
+}
+
+.customers-table .col-id {
+	width: 90px;
+}
+
+.customers-table tbody tr {
+	transition: background-color 120ms ease-in-out;
+}
+
+.customers-empty {
+	padding: 28px 16px;
+	text-align: center;
+}
+
+.customers-empty__title {
+	font-weight: 700;
+}
+
+.customers-empty__subtitle {
+	margin-top: 4px;
+	font-size: 0.875rem;
+	color: var(--bs-secondary-color);
+}
+
+.customers-loading {
+	position: relative;
+}
+
+.customers-loading__bar {
+	height: 3px;
+	background: linear-gradient(
+		90deg,
+		transparent,
+		var(--bs-primary-bg-subtle),
+		transparent
+	);
+	background-size: 200% 100%;
+	animation: customers-loading-bar 1.05s ease-in-out infinite;
+}
+
+.customers-loading__body {
+	padding: 16px;
+}
+
+.customers-skeleton {
+	display: grid;
+	gap: 10px;
+}
+
+.customers-skeleton__row {
+	height: 14px;
+	border-radius: 999px;
+	background: linear-gradient(
+		90deg,
+		var(--bs-tertiary-bg),
+		var(--bs-body-bg),
+		var(--bs-tertiary-bg)
+	);
+	background-size: 200% 100%;
+	animation: customers-skeleton 1.2s ease-in-out infinite;
+}
+
+.customers-skeleton__row:nth-child(2) {
+	width: 86%;
+}
+
+.customers-skeleton__row:nth-child(3) {
+	width: 92%;
+}
+
+.customers-skeleton__row:nth-child(4) {
+	width: 78%;
+}
+
+.customers-skeleton__row:nth-child(5) {
+	width: 88%;
+}
+
+@keyframes customers-loading-bar {
+	0% {
+		background-position: 200% 0;
+	}
+	100% {
+		background-position: -200% 0;
+	}
+}
+
+@keyframes customers-skeleton {
+	0% {
+		background-position: 200% 0;
+	}
+	100% {
+		background-position: -200% 0;
+	}
+}
