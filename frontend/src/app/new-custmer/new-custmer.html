@@ -1,0 +1,21 @@
+<div class="container">
+    
+    <h1 class="mt-4">New Customer</h1>
+    <form [formGroup]="newCustmerFormGroup" (ngSubmit)="handleSaveCustomer()" class="mt-4">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" formControlName="name" id="name" placeholder="Enter name">
+            <span class="text-danger" *ngIf="newCustmerFormGroup.get('name')?.invalid && newCustmerFormGroup.get('name')?.touched">
+                Name is required
+            </span>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" formControlName="email" id="email" placeholder="Enter email">
+            <span class="text-danger" *ngIf="newCustmerFormGroup.get('email')?.invalid && newCustmerFormGroup.get('email')?.touched">
+                Valid email is required
+            </span>
+        </div>
+        <button [disabled]="newCustmerFormGroup.invalid" type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
