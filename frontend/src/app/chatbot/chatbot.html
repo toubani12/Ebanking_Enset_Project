@@ -1,0 +1,104 @@
+<div class="container-fluid py-4">
+
+  <!-- Header -->
+  <div class="d-flex align-items-center gap-2 mb-4">
+    <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center"
+         style="width: 42px; height: 42px;">
+      <i class="bi bi-robot text-white fs-5"></i>
+    </div>
+    <div>
+      <h5 class="mb-0 fw-semibold">Assistant Bancaire IA</h5>
+      <small class="text-muted">Propulsé par GPT-4o · RAG activé</small>
+    </div>
+  </div>
+
+  <!-- Chat card -->
+  <div class="card shadow-sm border-0 rounded-4">
+
+    <!-- Messages area -->
+    <div class="card-body p-4 chat-messages">
+
+      @if (messages.length === 0) {
+        <div class="text-center text-muted py-5">
+          <i class="bi bi-chat-dots fs-1 d-block mb-2 opacity-50"></i>
+          <p class="mb-1 fw-medium">Bonjour, comment puis-je vous aider ?</p>
+          <small>Posez une question sur vos comptes ou les règles de la banque.</small>
+        </div>
+      }
+
+      @for (msg of messages; track $index) {
+
+        <!-- User message -->
+        @if (msg.role === 'user') {
+          <div class="d-flex justify-content-end mb-3">
+            <div class="user-bubble">{{ msg.content }}</div>
+          </div>
+        }
+
+        <!-- Assistant message -->
+        @if (msg.role === 'assistant') {
+          <div class="d-flex justify-content-start align-items-start gap-2 mb-3">
+            <div class="bot-avatar flex-shrink-0">
+              <i class="bi bi-robot text-white small"></i>
+            </div>
+            <div class="bot-bubble">
+              <markdown [data]="msg.content" />
+            </div>
+          </div>
+        }
+
+      }
+
+      <!-- Typing indicator (spinner) -->
+      @if (isLoading) {
+        <div class="d-flex justify-content-start align-items-start gap-2 mb-3">
+          <div class="bot-avatar flex-shrink-0">
+            <i class="bi bi-robot text-white small"></i>
+          </div>
+          <div class="bot-bubble d-flex align-items-center gap-2">
+            <div class="spinner-border spinner-border-sm text-primary" role="status">
+              <span class="visually-hidden">Chargement...</span>
+            </div>
+            <span class="text-muted small">L'assistant réfléchit…</span>
+          </div>
+        </div>
+      }
+
+      <!-- Invisible anchor to scroll into view -->
+      <div #scrollAnchor></div>
+    </div>
+
+    <hr class="my-0">
+
+    <!-- Input area -->
+    <div class="card-footer bg-white border-0 p-3">
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control border-end-0 rounded-start-pill"
+          placeholder="Posez votre question ici…"
+          [(ngModel)]="userInput"
+          (keyup.enter)="sendMessage()"
+          [disabled]="isLoading"
+          autofocus
+        />
+        <button
+          class="btn btn-primary rounded-end-pill px-4"
+          (click)="sendMessage()"
+          [disabled]="isLoading || !userInput.trim()"
+          title="Envoyer (Entrée)"
+        >
+          @if (isLoading) {
+            <span class="spinner-border spinner-border-sm" role="status"></span>
+          } @else {
+            <i class="bi bi-send-fill"></i>
+          }
+        </button>
+      </div>
+      <div class="text-end mt-1">
+        <small class="text-muted">Appuyez sur <kbd>Entrée</kbd> pour envoyer</small>
+      </div>
+    </div>
+
+  </div>
+</div>

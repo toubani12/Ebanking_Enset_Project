@@ -4,11 +4,13 @@ import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { appHttpInterceptor } from './interceptors/app-http-interceptor';
+import { provideMarkdown } from 'ngx-markdown';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes), 
+    provideRouter(routes),
     provideClientHydration(withEventReplay()),
-    provideHttpClient(withFetch(), withInterceptors([appHttpInterceptor]))
-  ]
+    provideHttpClient(withFetch(), withInterceptors([appHttpInterceptor])),
+    provideMarkdown(),
+  ],
 };

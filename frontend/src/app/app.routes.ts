@@ -9,7 +9,8 @@ export const routes: Routes = [
     {path:"customers", loadComponent: () => import('./customers/customers').then(m => m.Customers)},
     {path:"accounts", loadComponent: () => import('./accounts/accounts').then(m => m.Accounts)},
     {path:"new-customer", loadComponent: () => import('./new-custmer/new-custmer').then(m => m.NewCustmer), canActivate: [authorisationGuard]},
-    {path:"not-authorised", loadComponent: () => import('./not-authorised/not-authorised').then(m => m.NotAuthorised)}
+    {path:"not-authorised", loadComponent: () => import('./not-authorised/not-authorised').then(m => m.NotAuthorised)},
+    {path:"chatbot", loadComponent: () => import('./chatbot/chatbot').then(m => m.Chatbot)},
 ]},
-   
+
     ]
